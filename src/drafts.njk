@@ -1,0 +1,18 @@
+---
+layout: base.njk
+title: Drafts
+permalink: /drafts/
+---
+<div class="archive">
+  <header class="archive__header">
+    <h1 class="archive__title">Drafts</h1>
+    <p class="archive__description">Works in progress — unfinished, unpolished, shared for feedback.</p>
+  </header>
+
+  {%- for post in collections.drafts -%}
+  <article class="archive__post">
+    <time class="archive__date">{{ post.date | formatDate }}</time>
+    <a href="{{ post.url }}" class="archive__link">{{ post.data.title }}</a>
+  </article>
+  {%- endfor -%}
+</div>

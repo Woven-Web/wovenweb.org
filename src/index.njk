@@ -1,0 +1,84 @@
+---
+layout: base.njk
+title: Woven Web
+---
+
+<section class="opening">
+  <h1 class="opening__name">Woven Web</h1>
+  <p class="opening__label">community research lab</p>
+  <p class="opening__tagline">Weaving education, arts, and technology in service of life.</p>
+</section>
+
+<section id="who">
+  <p class="section-title">Who We Are</p>
+  <div class="prose">
+    <p>Woven Web is a community research lab. We are fostering connected cultures, developing systems in support of life, and nurturing the intersection of education, arts, and technology.</p>
+    <p>We are perhaps easiest to understand through our relationships — through the organizations and initiatives we are in collaboration with, and through the work we are doing together. We are rooted in Boulder, Colorado and woven into something larger.</p>
+    <p>The name says something true about our orientation: not <em>weaving</em> web, but <em>woven</em> web — recognizing the state of already being woven. The connections are already here. Our work is learning to see them, tend them, and build on them.</p>
+  </div>
+</section>
+
+<section id="relationships">
+  <p class="section-title">Our Relationships</p>
+  <div class="relationships">
+
+    <article class="relationship">
+      <h3>Spirit of the Front Range</h3>
+      <p>A newly forming 501(c)(3) focused on fostering a more connected bioregional network across the Front Range. We are closely partnered in building the infrastructure of belonging for this region.</p>
+    </article>
+
+    <article class="relationship">
+      <h3>Regen Hub</h3>
+      <p>A co-working and venture cooperative in downtown Boulder where much of our work lives and breathes. The Hub is a node — a place where builders, thinkers, and community weavers find each other.</p>
+      <p><a href="https://regenhub.co">regenhub.co →</a></p>
+    </article>
+
+    <article class="relationship">
+      <h3>techne.institute</h3>
+      <p>An integral technology institute we are helping to birth — bringing together AI, contemplative practice, and applied learning. Techne asks what it means to develop human capability alongside technological capability.</p>
+      <p><a href="https://techne.institute">techne.institute →</a></p>
+    </article>
+
+    <article class="relationship">
+      <h3>ATLAS Institute & Naropa University</h3>
+      <p>We are in deep connection with CU Boulder's ATLAS Institute and with Naropa University — two institutions working at the intersection of technology, arts, and integral learning. Their proximity is not coincidental; we are working to foster the culture that can emerge between them.</p>
+    </article>
+
+    <article class="relationship">
+      <h3>Open Civics</h3>
+      <p>Working on improving civic processes and protocols — building the open infrastructure that healthy governance requires. We share a belief that civic participation needs better tools and better culture.</p>
+      <p><a href="https://opencivics.co">opencivics.co →</a></p>
+    </article>
+
+    <article class="relationship">
+      <h3>Community Coordination Tools</h3>
+      <p>We are working with organizations in Oakland and beyond on community calendaring and coordination tools — building the practical software that helps people know what's happening and show up for each other.</p>
+    </article>
+
+  </div>
+</section>
+
+{% if collections.posts.length > 0 %}
+<section id="writing">
+  <p class="section-title">Writing</p>
+  <div class="writing-preview">
+    <div class="writing-preview__list">
+      {%- for post in collections.posts | limit(5) -%}
+      <article class="writing-preview__item">
+        <time class="writing-preview__date">{{ post.date | formatDate }}</time>
+        <a href="{{ post.url }}" class="writing-preview__link">{{ post.data.title }}</a>
+      </article>
+      {%- endfor -%}
+    </div>
+    {% if collections.posts.length > 5 %}
+    <p class="writing-preview__more"><a href="/writing/">View all writing &rarr;</a></p>
+    {% endif %}
+  </div>
+</section>
+{% endif %}
+
+<section id="connect" class="connect">
+  <p class="section-title">Connect</p>
+  <p>If this work resonates — if you're a potential funder, collaborator, or fellow traveler — we'd love to hear from you.</p>
+  <p class="connect__email"><a href="mailto:hello@wovenweb.org">hello@wovenweb.org</a></p>
+</section>

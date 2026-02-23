@@ -1,0 +1,28 @@
+---
+layout: base.njk
+---
+{% if draft %}
+<div class="draft-banner">
+  <span class="draft-banner__label">Draft</span>
+  This is a work in progress — unfinished, unpolished, shared for feedback.
+</div>
+{% endif %}
+<article class="post">
+  <header class="post__header">
+    <time class="post__date" datetime="{{ date | isoDate }}">{{ date | formatDateFull }}</time>
+    <h1 class="post__title">{{ title }}</h1>
+    {% if subtitle %}<p class="post__subtitle">{{ subtitle }}</p>{% endif %}
+  </header>
+
+  <div class="post__content prose">
+    {{ content | safe }}
+  </div>
+
+  <footer class="post__footer">
+    {% if draft %}
+      <a href="/drafts/" class="post__back">&larr; All Drafts</a>
+    {% else %}
+      <a href="/writing/" class="post__back">&larr; All Writing</a>
+    {% endif %}
+  </footer>
+</article>

@@ -1,0 +1,28 @@
+---
+layout: base.njk
+title: Writing
+permalink: /writing/
+---
+<div class="archive">
+  <header class="archive__header">
+    <h1 class="archive__title">Writing</h1>
+    <p class="archive__description">Essays, dispatches, and thinking from the lab.</p>
+  </header>
+
+  {% if collections.posts.length > 0 %}
+    {% set currentYear = "" %}
+    {%- for post in collections.posts -%}
+      {% set postYear = post.date | getYear %}
+      {% if postYear != currentYear %}
+        {% set currentYear = postYear %}
+        <p class="archive__year">{{ currentYear }}</p>
+      {% endif %}
+      <article class="archive__post">
+        <time class="archive__date">{{ post.date | formatDate }}</time>
+        <a href="{{ post.url }}" class="archive__link">{{ post.data.title }}</a>
+      </article>
+    {%- endfor -%}
+  {% else %}
+    <p style="color: var(--text-muted); font-style: italic;">Writing is on its way.</p>
+  {% endif %}
+</div>
