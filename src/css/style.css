@@ -631,18 +631,21 @@ section {
 }
 
 /* ========================================
-   Newsletter Embed
+   Newsletter
    ======================================== */
 
-.newsletter-embed {
-  margin-top: var(--space-md);
-  border-radius: 4px;
-  overflow: hidden;
+.newsletter-link {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--deep);
+  text-decoration: none;
+  border-bottom: 1px solid var(--amber);
+  padding-bottom: 1px;
+  transition: color 0.2s ease;
 }
 
-.newsletter-embed iframe {
-  display: block;
-  background: transparent;
+.newsletter-link:hover {
+  color: var(--amber);
 }
 
 /* ========================================
