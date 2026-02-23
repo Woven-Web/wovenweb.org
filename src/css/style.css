@@ -631,6 +631,21 @@ section {
 }
 
 /* ========================================
+   Newsletter Embed
+   ======================================== */
+
+.newsletter-embed {
+  margin-top: var(--space-md);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.newsletter-embed iframe {
+  display: block;
+  background: transparent;
+}
+
+/* ========================================
    Draft Banner
    ======================================== */
 
