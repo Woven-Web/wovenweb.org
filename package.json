@@ -1,10 +1,12 @@
 {
   "name": "wovenweb-org",
   "version": "1.0.0",
-  "description": "Woven Web — a community research lab weaving education, arts, and technology in service of life.",
+  "description": "Woven Web \u2014 a community research lab weaving education, arts, and technology in service of life.",
   "scripts": {
     "start": "eleventy --serve",
-    "build": "eleventy"
+    "build": "eleventy",
+    "check": "node scripts/check-site.mjs",
+    "serve": "node scripts/serve.mjs _site 8080"
   },
   "devDependencies": {
     "@11ty/eleventy": "^2.0.1"
