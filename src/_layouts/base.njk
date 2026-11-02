@@ -6,30 +6,28 @@
   <title>{% if title %}{{ title }} | {% endif %}Woven Web</title>
   <meta name="description" content="{{ description or 'Woven Web — a community research lab weaving education, arts, and technology in service of life.' }}">
   {% if canonical %}<link rel="canonical" href="{{ canonical }}">{% endif %}
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#EDEBE3" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#12173A" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/fonts/newsreader-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/css/style.css">
 </head>
-<body>
+<body class="{{ bodyClass or 'page' }}">
+  {% if not home %}
   <header class="site-header">
-    <nav class="nav">
-      <a href="/" class="nav__home">Woven Web</a>
-      <div class="nav__links">
-        <a href="/writing/" class="nav__link">Writing</a>
-      </div>
-    </nav>
+    <a href="/" class="site-header__home">Woven Web</a>
   </header>
+  {% endif %}
   <main>
     {{ content | safe }}
   </main>
   <footer class="site-footer">
-    <p class="footer__quote">The web already holds us.</p>
-    <div class="footer__links">
-      <a href="/writing/">Writing</a>
+    <p class="site-footer__quote">The web already holds us.</p>
+    <div class="site-footer__links">
       <a href="mailto:hello@wovenweb.org">Email</a>
       <a href="https://github.com/Woven-Web">GitHub</a>
     </div>
   </footer>
+  {% if home %}<script src="/js/web.js" type="module"></script>{% endif %}
 </body>
 </html>

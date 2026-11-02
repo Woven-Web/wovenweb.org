@@ -3,6 +3,9 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/css": "css" });
   eleventyConfig.addPassthroughCopy({ "src/images": "images" });
   eleventyConfig.addPassthroughCopy({ "src/CNAME": "CNAME" });
+  eleventyConfig.addPassthroughCopy({ "src/fonts": "fonts" });
+  eleventyConfig.addPassthroughCopy({ "src/js": "js" });
+  eleventyConfig.addPassthroughCopy({ "src/favicon.svg": "favicon.svg" });
 
   // Writing collection
   eleventyConfig.addCollection("posts", function(collectionApi) {

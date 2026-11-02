@@ -1,0 +1,32 @@
+{#- One variant of the places map. Expects `v` (wovenWeb.wide or wovenWeb.narrow). -#}
+<svg class="web-map web-map--{{ v.key }}" viewBox="0 0 {{ v.W }} {{ v.H }}" role="group" aria-label="Places where the culture is emerging">
+  <g class="web-map__warp" aria-hidden="true">
+    {%- for p in v.places %}
+    <line x1="{{ p.x }}" x2="{{ p.x }}" y1="0" y2="{{ p.y }}"/>
+    {%- endfor %}
+  </g>
+  <g class="web-map__threads" aria-hidden="true">
+    {%- for t in v.threads %}
+    <path class="thread" d="{{ t.d }}" data-a="{{ t.a }}" data-b="{{ t.b }}"/>
+    {%- endfor %}
+  </g>
+  <g class="web-map__loops" aria-hidden="true">
+    {%- for l in v.loops %}
+    <path class="loop dye-{{ l.dye }}" d="{{ l.d }}" data-scene="{{ l.scene }}"/>
+    {%- endfor %}
+  </g>
+  <g class="web-map__glints" aria-hidden="true"></g>
+  <g class="web-map__places">
+    {%- for p in v.places %}
+    <g class="place{% if p.home %} place--home{% endif %}" data-place="{{ p.id }}" transform="translate({{ p.x }} {{ p.y }})" tabindex="0" role="button" aria-pressed="false" aria-label="{{ p.name }}{% if p.role %}, {{ p.role }}{% endif %}">
+      <circle class="place__hit" r="22"/>
+      <circle class="place__halo" r="{{ 11 if p.home else 8 }}"/>
+      <circle class="place__knot" r="{{ 5.5 if p.home else 4 }}"/>
+      <text class="place__name" x="{{ p.label.x }}" y="5" text-anchor="{{ p.label.anchor }}">{{ p.name }}</text>
+      {%- if p.role %}
+      <text class="place__role" x="{{ p.label.x }}" y="23" text-anchor="{{ p.label.anchor }}">{{ p.role }}</text>
+      {%- endif %}
+    </g>
+    {%- endfor %}
+  </g>
+</svg>
