@@ -57,44 +57,7 @@ bodyClass: home
   </div>
 </section>
 
-<section class="band" id="web" aria-labelledby="web-h">
-  <div class="band__inner">
-    <div class="band__head">
-      <h2 class="band__title" id="web-h">The woven web</h2>
-      <p class="band__note">An early sketch of the web we're part of.</p>
-    </div>
-    <div class="web" data-web>
-      <div class="web__places">
-        <h3 class="web__label">Places where the culture is emerging</h3>
-        {%- set v = wovenWeb.wide %}
-        {% include "web-map.njk" %}
-        {%- set v = wovenWeb.narrow %}
-        {% include "web-map.njk" %}
-        <p class="web__caption" id="web-caption" aria-live="polite"></p>
-      </div>
-      <div class="web__scenes">
-        <h3 class="web__label">Scenes that overlap</h3>
-        <ul class="bridges">
-          {%- for b in wovenWeb.bridges %}
-          <li>
-            <button type="button" class="bridge" data-bridge="{{ b.id }}"{% if b.place %} data-place="{{ b.place }}"{% endif %} aria-pressed="false">
-              <svg class="braid" viewBox="0 0 {{ wovenWeb.braid.W }} {{ wovenWeb.braid.H }}" aria-hidden="true" focusable="false">
-                <defs><clipPath id="over-{{ b.id }}">
-                  {%- for o in wovenWeb.braid.over %}<rect x="{{ o.x }}" y="0" width="{{ o.w }}" height="{{ wovenWeb.braid.H }}"/>{% endfor -%}
-                </clipPath></defs>
-                <path class="dye-{{ b.A.dye }}" d="{{ wovenWeb.braid.a }}"/>
-                <path class="dye-{{ b.B.dye }}" d="{{ wovenWeb.braid.b }}"/>
-                <path class="dye-{{ b.A.dye }}" d="{{ wovenWeb.braid.a }}" clip-path="url(#over-{{ b.id }})"/>
-              </svg>
-              <span class="bridge__names"><span>{{ b.A.name }}</span> <span><span class="bridge__x">×</span> {{ b.B.name }}</span></span>
-            </button>
-          </li>
-          {%- endfor %}
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
+{#- The woven web map is parked until it is polished enough to share (Aaron, 2026-11-02). Restore from git history. -#}
 
 <section class="sec" id="relationships" aria-labelledby="rel-h">
   <h2 class="sec__title" id="rel-h">Our relationships</h2>
@@ -106,33 +69,21 @@ bodyClass: home
     </article>
 
     <article class="relationship">
-      <h3>Regen Hub</h3>
+      <h3>RegenHub &amp; Techne</h3>
       <p>A co-working and venture cooperative in downtown Boulder where much of our work lives and breathes. The Hub is a node — a place where builders, thinkers, and community weavers find each other.</p>
       <p class="relationship__links"><a href="https://regenhub.xyz">regenhub.xyz</a></p>
     </article>
 
     <article class="relationship">
-      <h3>techne.institute</h3>
-      <p>An integral technology institute we are helping to birth — bringing together AI, contemplative practice, and applied learning. Techne asks what it means to develop human capability alongside technological capability.</p>
-      <p class="relationship__links"><a href="https://techne.institute">techne.institute</a></p>
+      <h3>ATLAS Institute</h3>
+      <p>CU Boulder's ATLAS Institute, working at the intersection of technology, arts, and integral learning.</p>
+      <p class="relationship__links"><a href="https://www.colorado.edu/atlas">colorado.edu/atlas</a></p>
     </article>
 
     <article class="relationship">
-      <h3>ATLAS Institute &amp; Naropa University</h3>
-      <p>We are in deep connection with CU Boulder's ATLAS Institute and with Naropa University — two institutions working at the intersection of technology, arts, and integral learning. Their proximity is not coincidental; we are working to foster the culture that can emerge between them.</p>
-      <p class="relationship__links"><a href="https://www.colorado.edu/atlas">colorado.edu/atlas</a> <a href="https://www.naropa.edu">naropa.edu</a></p>
-    </article>
-
-    <article class="relationship">
-      <h3>Open Civics</h3>
-      <p>Working on improving civic processes and protocols — building the open infrastructure that healthy governance requires. We share a belief that civic participation needs better tools and better culture.</p>
-      <p class="relationship__links"><a href="https://opencivics.co">opencivics.co</a></p>
-    </article>
-
-    <article class="relationship">
-      <h3>Community Coordination Tools</h3>
-      <p>We are working with organizations in Oakland and beyond on community calendaring and coordination tools — building the practical software that helps people know what's happening and show up for each other.</p>
-      <p class="relationship__links"><a href="https://oaklog.org">oaklog.org</a></p>
+      <h3>Naropa University</h3>
+      <p>Naropa University, working at the intersection of contemplative practice, arts, and integral learning. Its proximity to ATLAS is not coincidental; we are working to foster the culture that can emerge between them.</p>
+      <p class="relationship__links"><a href="https://www.naropa.edu">naropa.edu</a></p>
     </article>
 
   </div>

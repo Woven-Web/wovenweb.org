@@ -10,13 +10,10 @@ import { join, extname, dirname, normalize } from "node:path";
 
 const SITE = "_site";
 
-// External links on wovenweb.org before this refresh (links only; the old Google Fonts URLs were stylesheets, now vendored).
+// External links kept from wovenweb.org (Oaklog, OpenCivics and techne.institute removed at Aaron's word 2026-11-02) (links only; the old Google Fonts URLs were stylesheets, now vendored).
 const KEEP = [
   "https://github.com/Woven-Web",
-  "https://oaklog.org",
-  "https://opencivics.co",
   "https://regenhub.xyz",
-  "https://techne.institute",
   "https://wovenweb.beehiiv.com/subscribe",
   "https://www.colorado.edu/atlas",
   "https://www.naropa.edu",
