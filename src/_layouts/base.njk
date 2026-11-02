@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% if title and title != "Woven Web" %}{{ title }} | {% endif %}Woven Web</title>
+  <title>{% if title %}{{ title }} | {% endif %}Woven Web</title>
   <meta name="description" content="{{ description or 'Woven Web — a community research lab weaving education, arts, and technology in service of life.' }}">
   {% if canonical %}<link rel="canonical" href="{{ canonical }}">{% endif %}
   <meta name="theme-color" content="#EDEBE3" media="(prefers-color-scheme: light)">

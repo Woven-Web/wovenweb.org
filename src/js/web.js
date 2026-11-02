@@ -9,6 +9,7 @@ if (root) {
   const caption = root.querySelector("#web-caption");
   const bridges = [...root.querySelectorAll(".bridge")];
   const motion = matchMedia("(prefers-reduced-motion: reduce)");
+  const wide = matchMedia("(min-width: 720px)"); // the same breakpoint as the CSS that swaps the two map variants
 
   // One record per place, read from the markup so the text lives in one spot.
   const places = new Map();
@@ -79,16 +80,16 @@ if (root) {
   }
 
   for (const g of root.querySelectorAll(".place")) {
-    const go = (e) => { e.stopPropagation(); pick({ type: "place", id: g.dataset.place }); };
+    const go = () => pick({ type: "place", id: g.dataset.place });
     g.addEventListener("click", go);
     g.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(e); }
     });
   }
   for (const b of bridges) b.addEventListener("click", () => pick({ type: "bridge", id: b.dataset.bridge }));
-  // tapping open ground clears the selection
-  for (const svg of root.querySelectorAll(".web-map")) svg.addEventListener("click", () => sel && pick(null));
-  root.addEventListener("keydown", (e) => { if (e.key === "Escape" && sel) pick(null); });
+  // tapping open ground in the map band clears the selection; so does Escape
+  root.closest(".band")?.addEventListener("click", (e) => { if (sel && !e.target.closest(".place, .bridge")) pick(null); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && sel) pick(null); });
 
   // Glints: one small light per thread, the exchange between places. Only when the map is on screen.
   const glints = [];
@@ -110,8 +111,9 @@ if (root) {
 
   function tick(now) {
     raf = requestAnimationFrame(tick);
+    const shown = wide.matches ? "web-map--wide" : "web-map--narrow";
     for (const g of glints) {
-      if (!g.svg.getBoundingClientRect().width) continue; // the other layout variant
+      if (!g.svg.classList.contains(shown)) continue; // the other layout variant
       if (!g.len) g.len = g.path.getTotalLength();
       let t = (now / 1000 / g.period + g.phase) % 1;
       if (g.dir < 0) t = 1 - t;
@@ -137,7 +139,6 @@ if (root) {
   new IntersectionObserver(([entry]) => { onScreen = entry.isIntersecting; run(); }).observe(root);
   document.addEventListener("visibilitychange", run);
   motion.addEventListener("change", run);
-  addEventListener("resize", () => { for (const g of glints) g.len = 0; });
 
   render();
 }

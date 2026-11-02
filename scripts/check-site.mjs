@@ -63,9 +63,11 @@ for (const f of html) {
 for (const f of css) {
   const text = await readFile(f, "utf8");
   for (const m of text.matchAll(/url\(["']?([^"')]+)["']?\)/g)) {
-    if (/^https?:/.test(m[1])) continue; // caught below
+    const ref = m[1];
+    if (/^(https?:|data:|#)/.test(ref)) continue; // remote URLs are caught below
     internal++;
-    if (!(await exists(join(SITE, m[1])))) check(false, `${f}: ${m[1]} resolves`);
+    const target = ref.startsWith("/") ? join(SITE, ref) : normalize(join(dirname(f), ref));
+    if (!(await exists(target.split(/[?#]/)[0]))) check(false, `${f}: ${ref} resolves`);
   }
 }
 check(failures.length === 0, `${internal} internal references resolve`);
@@ -76,7 +78,8 @@ for (const link of KEEP) check(allExternal.has(link), `external link kept: ${lin
 // 3. no third-party loads: external URLs may appear only as <a href>
 for (const f of html) {
   const text = await readFile(f, "utf8");
-  for (const m of text.matchAll(/<(script|link|img|iframe|source|video|audio|embed|object)\b[^>]*\s(src|href|srcset|data)="(https?:)?\/\/[^"]+"/gi)) {
+  for (const m of text.matchAll(/<(script|link|img|iframe|source|video|audio|embed|object)\b[^>]*\s(src|href|srcset|data)="(https?:)?\/\/[^"]+"[^>]*>/gi)) {
+    if (/^<link\b/i.test(m[0]) && /\srel="(canonical|alternate|me|author)"/i.test(m[0])) continue; // references, not loads
     check(false, `${f}: third-party load ${m[0].slice(0, 120)}`);
   }
 }
@@ -101,20 +104,24 @@ check(writingLinks === 0, "no page outside the writing pages links to /writing/,
 // 5. quotes from a private source must not appear
 const qi = process.argv.indexOf("--quotes");
 if (qi > 0) {
-  const src = await readFile(process.argv[qi + 1], "utf8");
-  const quotes = [...src.matchAll(/:\s*"([^"]{25,})"/g)].map((m) => m[1]);
+  const file = await readFile(process.argv[qi + 1], "utf8");
+  // a source with a QUOTES object (like the map prototype's data.js): check that object only
+  const block = file.match(/QUOTES\s*=\s*\{[\s\S]*?\n\};/);
+  const src = block ? block[0] : file;
+  const quotes = [...src.matchAll(/:\s*(["'`])((?:\\.|(?!\1)[^\\])+?)\1/g)].map((m) => m[2]).filter((q) => q.split(/\s+/).length >= 4);
   const flat = (s) => s.toLowerCase().replace(/<[^>]+>/g, " ").replace(/&[a-z#0-9]+;/g, " ").replace(/[^a-z0-9]+/g, " ").trim();
   const site = flat((await Promise.all([...html, ...js].map((f) => readFile(f, "utf8")))).join(" "));
   let leaks = 0;
   for (const q of quotes) {
     const words = flat(q).split(" ");
-    for (let i = 0; i + 6 <= words.length; i++) {
-      const shingle = words.slice(i, i + 6).join(" ");
+    const n = Math.min(6, words.length); // short quotes are checked whole
+    for (let i = 0; i + n <= words.length; i++) {
+      const shingle = words.slice(i, i + n).join(" ");
       if (site.includes(shingle)) { leaks++; console.log(`  found: "${shingle}"`); break; }
     }
   }
   check(quotes.length > 0, `read ${quotes.length} quotes from the source file`);
-  check(leaks === 0, `no six-word run from any of those quotes appears in the built site`);
+  check(leaks === 0, `no quote, or six-word run of one, appears in the built site`);
   for (const word of ["prototype", "journal", "aaron gabriel", "role of"]) check(!site.includes(word), `built site has no "${word}"`);
   const raw = (await Promise.all(html.map((f) => readFile(f, "utf8")))).join("");
   check(!raw.includes("[Aaron:"), 'built site has no "[Aaron: …]" placeholder (only the one shared [Aaron/Eileen: …] note)');

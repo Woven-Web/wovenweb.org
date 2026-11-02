@@ -101,7 +101,9 @@ const desktop = { viewport: { width: 1280, height: 800 }, deviceScaleFactor: 1 }
   await page.locator('.bridge[data-bridge="cu-naropa"]').click();
   check(await page.locator('.web-map--wide [data-place="boulder"]').evaluate((g) => g.classList.contains("is-lit")), "desktop: CU Boulder × Naropa lights Boulder");
   await page.screenshot({ path: `${OUT}11-desktop-map-cu-naropa.png` });
+  await page.locator("#relationships h2").click(); // focus leaves the map
   await page.keyboard.press("Escape");
+  check(!(await page.locator("[data-web]").evaluate((w) => w.classList.contains("has-sel"))), "desktop: Escape clears the selection from anywhere");
   await page.locator("#relationships").evaluate((el) => el.scrollIntoView({ block: "start", behavior: "instant" }));
   await page.screenshot({ path: `${OUT}12-desktop-relationships.png` });
   await page.screenshot({ path: `${OUT}13-desktop-full.png`, fullPage: true });
