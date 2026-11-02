@@ -149,7 +149,7 @@ a:hover {
   color: #161B3D;
 }
 
-/* A visible note for Aaron or Eileen to fill in. */
+/* A visible placeholder, to fill in before going live. */
 .ph {
   display: inline-block;
   font-family: var(--font-ui);

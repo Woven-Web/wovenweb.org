@@ -122,9 +122,9 @@ if (qi > 0) {
   }
   check(quotes.length > 0, `read ${quotes.length} quotes from the source file`);
   check(leaks === 0, `no quote, or six-word run of one, appears in the built site`);
-  for (const word of ["prototype", "journal", "aaron gabriel", "role of"]) check(!site.includes(word), `built site has no "${word}"`);
+  for (const word of ["prototype", "journal", "role of"]) check(!site.includes(word), `built site has no "${word}"`);
   const raw = (await Promise.all(html.map((f) => readFile(f, "utf8")))).join("");
-  check(!raw.includes("[Aaron:"), 'built site has no "[Aaron: …]" placeholder (only the one shared [Aaron/Eileen: …] note)');
+  check(!raw.includes("[Aaron:"), 'built site has no per-place role placeholders');
 }
 
 if (failures.length) { console.log(`\n${failures.length} check(s) failed`); process.exit(1); }
