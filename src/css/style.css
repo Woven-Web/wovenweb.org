@@ -186,7 +186,8 @@ a:hover {
   letter-spacing: -0.035em;
   color: var(--ink);
   /* the width of one pick: how far a thread runs before it changes sides */
-  --pick: 0.16em;
+  --pick: 0.78em;
+  --feather: 0.09em;
   --thread: clamp(3.5px, 0.45vw, 5.5px);
 }
 
@@ -209,8 +210,13 @@ a:hover {
 
 .hero__weft--over {
   z-index: 2;
-  -webkit-mask-image: repeating-linear-gradient(90deg, #000 0 var(--pick), transparent var(--pick) calc(2 * var(--pick)));
-  mask-image: repeating-linear-gradient(90deg, #000 0 var(--pick), transparent var(--pick) calc(2 * var(--pick)));
+  /* soft-edged picks, so a thread slides over and under rather than switching */
+  --weave: repeating-linear-gradient(90deg,
+    #000 0, #000 calc(var(--pick) - var(--feather)),
+    transparent calc(var(--pick) + var(--feather)), transparent calc(2 * var(--pick) - var(--feather)),
+    #000 calc(2 * var(--pick)));
+  -webkit-mask-image: var(--weave);
+  mask-image: var(--weave);
 }
 
 /* neighbouring threads alternate, as in a plain weave */
@@ -885,4 +891,18 @@ a:hover {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: 0.01ms !important; }
+}
+
+/* Who we are: the opening paragraph leads */
+.prose .prose__lead {
+  font-size: clamp(1.3rem, 2.2vw, 1.6rem);
+  line-height: 1.42;
+  color: var(--ink);
+}
+
+/* three gatherings fit on one line on a phone */
+@media (max-width: 560px) {
+  .cohere__years { flex-wrap: nowrap; gap: 0.75rem 1.1rem; }
+  .cohere__years li { font-size: 0.84rem; white-space: nowrap; }
+  .cohere__years::before { right: 0; }
 }
